@@ -10,3 +10,10 @@ Development to login (REST API)
 - Sequelize
 - MySql
 ```
+
+## How to start
+```
+1.- npm install
+2.- create the file .env and put the global variable
+3.- npm start
+```
