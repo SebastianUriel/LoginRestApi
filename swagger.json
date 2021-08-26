@@ -1,0 +1,1109 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Microservice - Login Rest API",
+        "description": "This is a microservces to handle the users, roles and paths.",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:8080",
+    "basePath": "/v1/api/auth",
+    "tags": [{
+            "name": "Authorization",
+            "description": "API for authorization in the system"
+        },
+        {
+            "name": "Users",
+            "description": "API for users in the system"
+        },
+        {
+            "name": "Paths",
+            "description": "API for paths in the system"
+        },
+        {
+            "name": "Roles",
+            "description": "API for roles in the system"
+        },
+        {
+            "name": "Paths with roles",
+            "description": "API for path with roles in the system"
+        },
+        {
+            "name": "Users with roles",
+            "description": "API for users with roles in the system"
+        }
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/check/role": {
+            "get": {
+                "tags": [
+                    "Authorization"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "CheckRole",
+                        "in": "body",
+                        "description": "Just path name",
+                        "schema": {
+                            "$ref": "#/definitions/CheckRole"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The user [name] is allowed to this path [path_name]"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "parameters": [{
+                    "name": "Login",
+                    "in": "body",
+                    "description": "Log in by email and password",
+                    "schema": {
+                        "$ref": "#/definitions/Login"
+                    }
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Token"
+                        }
+                    }
+                }
+            }
+        },
+        "/path": {
+            "get": {
+                "tags": [
+                    "Paths"
+                ],
+                "parameters": [{
+                    "name": "x-token",
+                    "in": "header",
+                    "description": "Token to be passed as a header",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    },
+                    "style": "simple"
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Paths"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Paths"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "CreatePath",
+                        "in": "body",
+                        "description": "New path",
+                        "schema": {
+                            "$ref": "#/definitions/CreatePath"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Path"
+                        }
+                    }
+                }
+            }
+        },
+        "/path/{id}": {
+            "get": {
+                "tags": [
+                    "Paths"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of path that we want to find",
+                        "type": "integer"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Path"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Paths"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of path that we want to find",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "UpdatePath",
+                        "in": "body",
+                        "description": "Update path",
+                        "schema": {
+                            "$ref": "#/definitions/UpdatePath"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Path"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Paths"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of path that we want to find",
+                        "type": "integer"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Path"
+                        }
+                    }
+                }
+            }
+        },
+        "/pathRole": {
+            "post": {
+                "tags": [
+                    "Paths with roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "CreatePathRole",
+                        "in": "body",
+                        "description": "New path with role",
+                        "schema": {
+                            "$ref": "#/definitions/CreatePathRole"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/PathRole"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Paths with roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "PathRole",
+                        "in": "body",
+                        "description": "Path with role",
+                        "schema": {
+                            "$ref": "#/definitions/PathRole"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/PathRole"
+                        }
+                    }
+                }
+            }
+        },
+        "/pathRole/{path_id}": {
+            "get": {
+                "tags": [
+                    "Paths with roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of path that we want to find",
+                        "type": "integer"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/PathsRoles"
+                        }
+                    }
+                }
+            }
+        },
+        "/role": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "parameters": [{
+                    "name": "x-token",
+                    "in": "header",
+                    "description": "Token to be passed as a header",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    },
+                    "style": "simple"
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Roles"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "CreateRole",
+                        "in": "body",
+                        "description": "New role",
+                        "schema": {
+                            "$ref": "#/definitions/CreateRole"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                }
+            }
+        },
+        "/role/{id}": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of role that we want to find",
+                        "type": "integer"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of role that we want to find",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "UpdateRole",
+                        "in": "body",
+                        "description": "Update role",
+                        "schema": {
+                            "$ref": "#/definitions/UpdateRole"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of role that we want to find",
+                        "type": "integer"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Role"
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [{
+                    "name": "x-token",
+                    "in": "header",
+                    "description": "Token to be passed as a header",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    },
+                    "style": "simple"
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Users"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "CreateUser",
+                        "in": "body",
+                        "description": "New user",
+                        "schema": {
+                            "$ref": "#/definitions/CreateUser"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of user that we want to find",
+                        "type": "integer"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of user that we want to find",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "UpdateUser",
+                        "in": "body",
+                        "description": "Update user",
+                        "schema": {
+                            "$ref": "#/definitions/UpdateUser"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of yser that we want to find",
+                        "type": "integer"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/userRole": {
+            "post": {
+                "tags": [
+                    "Users with roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "CreateUserRole",
+                        "in": "body",
+                        "description": "New user with role",
+                        "schema": {
+                            "$ref": "#/definitions/CreateUserRole"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/UserRole"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users with roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "UserRole",
+                        "in": "body",
+                        "description": "User with pole",
+                        "schema": {
+                            "$ref": "#/definitions/UserRole"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/UserRole"
+                        }
+                    }
+                }
+            }
+        },
+        "/userRole/{user_id}": {
+            "get": {
+                "tags": [
+                    "Users with roles"
+                ],
+                "parameters": [{
+                        "name": "x-token",
+                        "in": "header",
+                        "description": "Token to be passed as a header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Id of user that we want to find",
+                        "type": "integer"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/UsersRoles"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Login": {
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "CheckRole": {
+            "required": [
+                "path_name"
+            ],
+            "properties": {
+                "path_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Token": {
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "Path": {
+            "properties": {
+                "id_path": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "menu": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Paths": {
+            "type": "array",
+            "$ref": "#/definitions/Path"
+        },
+        "CreatePath": {
+            "required": [
+                "name",
+                "path"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "UpdatePath": {
+            "required": [
+                "name",
+                "path",
+                "menu",
+                "status"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "menu": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "PathRole": {
+            "required": [
+                "id_path",
+                "id_role"
+            ],
+            "properties": {
+                "id_path": {
+                    "type": "integer"
+                },
+                "id_role": {
+                    "type": "integer"
+                }
+            }
+        },
+        "PathsRoles": {
+            "type": "array",
+            "$ref": "#/definitions/PathRole"
+        },
+        "CreatePathRole": {
+            "properties": {
+                "id_path": {
+                    "type": "integer"
+                },
+                "id_role": {
+                    "type": "integer"
+                }
+            }
+        },
+        "UserRole": {
+            "required": [
+                "id_user",
+                "id_role"
+            ],
+            "properties": {
+                "id_user": {
+                    "type": "integer"
+                },
+                "id_role": {
+                    "type": "integer"
+                }
+            }
+        },
+        "UsersRoles": {
+            "type": "array",
+            "$ref": "#/definitions/UserRole"
+        },
+        "CreateUserRole": {
+            "properties": {
+                "id_user": {
+                    "type": "integer"
+                },
+                "id_role": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Role": {
+            "properties": {
+                "id_role": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Roles": {
+            "type": "array",
+            "$ref": "#/definitions/Role"
+        },
+        "CreateRole": {
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "UpdateRole": {
+            "required": [
+                "name",
+                "status"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "User": {
+            "properties": {
+                "id_user": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "birthday": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Users": {
+            "type": "array",
+            "$ref": "#/definitions/User"
+        },
+        "CreateUser": {
+            "required": [
+                "password",
+                "name",
+                "email",
+                "last_name",
+                "birthday"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "birthday": {
+                    "type": "string",
+                    "format": "date"
+                }
+            }
+        },
+        "UpdateUser": {
+            "required": [
+                "password",
+                "name",
+                "email",
+                "last_name",
+                "birthday",
+                "status"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "birthday": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "status": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}
